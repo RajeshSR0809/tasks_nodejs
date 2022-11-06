@@ -17,7 +17,6 @@ const create = async (req, res) => {
     }
 }
 
-
 const removeAll = async (req, res) => {
     try {
         await Tasks.deleteMany();
@@ -82,6 +81,7 @@ const removeTaskByID = async (req, res) => {
         })        
     }
 }
+
 const updateTaskByID = async (req, res) => {
     try {
         let body = req.body;
@@ -94,13 +94,21 @@ const updateTaskByID = async (req, res) => {
         })         
     }
 }
+
 const replaceTaskByID = async (req, res) => {
     try {
         let body = req.body;
-        let taskDoc = req.task;
+        let id = req.task.id;
+
+        console.log(id);
         let newDOc = await new Task(body)
         await newDOc.validate();
-        let updatedDoc = await Task.findOneAndReplace( { "_id": taskDoc.id}, body, { new: true, strict: true });
+        console.log(newDOc)
+        let newDocClone = newDOc.toObject();
+        console.log(newDocClone);
+        delete newDocClone._id;
+        console.log(newDocClone);
+        let updatedDoc = await Task.findOneAndReplace( { "_id": id}, newDocClone, { new: true, strict: true });
         res.json(updatedDoc);
     } catch (error) {
         console.log(error)
@@ -109,9 +117,6 @@ const replaceTaskByID = async (req, res) => {
         })            
     }
 }
-
-
-
 
 
 export default {

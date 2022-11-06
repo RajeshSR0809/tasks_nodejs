@@ -2,8 +2,10 @@ import app from './express.js'
 import mongoose from 'mongoose'
 
 // Connection URL
-mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/tasks')
+mongoose.Promise = global.Promise;
+//mongodb+srv://harshsaxena7:wewereonabreak@todo-list.3bcfg99.mongodb.net/test
+//mongodb://localhost:27017/tasks
+mongoose.connect('mongodb+srv://harshsaxena7:wewereonabreak@todo-list.3bcfg99.mongodb.net/test');
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database`)
 })
